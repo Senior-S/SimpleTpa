@@ -1,0 +1,68 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\Copia de seguridad\\Plugins\\OpenModPlugins\\SimpleTpa\\SimpleTpa.csproj": {}
+  },
+  "projects": {
+    "E:\\Copia de seguridad\\Plugins\\OpenModPlugins\\SimpleTpa\\SimpleTpa.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Copia de seguridad\\Plugins\\OpenModPlugins\\SimpleTpa\\SimpleTpa.csproj",
+        "projectName": "SS.SimpleTpa",
+        "projectPath": "E:\\Copia de seguridad\\Plugins\\OpenModPlugins\\SimpleTpa\\SimpleTpa.csproj",
+        "packagesPath": "C:\\Users\\maxim\\.nuget\\packages\\",
+        "outputPath": "E:\\Copia de seguridad\\Plugins\\OpenModPlugins\\SimpleTpa\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\maxim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net461": {
+            "targetAlias": "net461",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "targetAlias": "net461",
+          "dependencies": {
+            "Legacy2CPSWorkaround": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Microsoft.NETFramework.ReferenceAssemblies.net461": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "OpenMod.Core": {
+              "target": "Package",
+              "version": "[2.3.8, )"
+            },
+            "OpenMod.Unturned": {
+              "target": "Package",
+              "version": "[2.3.8, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

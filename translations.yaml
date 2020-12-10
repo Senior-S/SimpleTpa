@@ -1,0 +1,9 @@
+plugin_translation:
+  tpa_accepted: "You will be teleport to {USER} in {INTERVAL} seconds."
+  tpa_cancelled: "The TPA request has be cancelled."
+  tpa_received: "You received TPA request from {USER}"
+  tpa_error_user_dead: "You can't be teleported while you dead."
+  tpa_error_target_dead: "You can't teleport to a dead corpse."
+  tpa_error_player_not_found: "Player not found!"
+  tpa_error_yourself: "You can't teleport to yourself."
+  tpa_now: "Teleporting now!"
