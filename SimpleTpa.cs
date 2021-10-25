@@ -66,45 +66,46 @@ namespace SimpleTpa
         protected override async UniTask OnLoadAsync()
         {
             m_Logger.LogInformation("Plugin loaded correctly!");
-            m_Logger.LogInformation("More plugins: www.dvtserver.xyz");
+            m_Logger.LogInformation("<<SSPlugins>>");
 
-            SteamChannel.onTriggerSend += OnTriggerSend;
+            await UniTask.CompletedTask;
+
+            PlayerAnimator.OnLeanChanged_Global += PlayerAnimator_OnLeanChanged_Global;
         }
 
-        // tellLean - Arguments: Default: 1 - Derecha/Right: 0 - Izquierda/Left: 2
-        private void OnTriggerSend(SteamPlayer s, string name, ESteamCall mode, ESteamPacket type, object[] R)
+        private void PlayerAnimator_OnLeanChanged_Global(PlayerAnimator obj)
         {
-            if (name == "tellLean")
-            {
-                AsyncHelper.RunSync(async () => {
-                    UnturnedUser user = (UnturnedUser)await m_UserManager.FindUserAsync(KnownActorTypes.Player, s.playerID.steamID.ToString(), UserSearchMode.FindById);
-                    if (PendingTeleports.Any(k => k.Value == user))
+            AsyncHelper.RunSync(async () => {
+                UnturnedUser user = (UnturnedUser)await m_UserManager.FindUserAsync(KnownActorTypes.Player, obj.player.channel.owner.playerID.steamID.ToString(), UserSearchMode.FindById);
+                if (PendingTeleports.Any(k => k.Value == user))
+                {
+                    if (obj.leanLeft)
                     {
-                        if (R[0].ToString() == "2")
-                        {
-                            var toRemove = PendingTeleports.Where(k => k.Value == user).First();
-                            var sender = toRemove.Key;
-                            PendingTeleports.Remove(toRemove.Key);
-                            await sender.PrintMessageAsync(m_StringLocalizer["plugin_translation:tpa_cancelled"]);
-                        }
-                        else if (R[0].ToString() == "0")
-                        {
-                            var toRemove = PendingTeleports.Where(k => k.Value == user).First();
-                            var sender = toRemove.Key;
-                            PendingTeleports.Remove(toRemove.Key);
-                            await sender.PrintMessageAsync(m_StringLocalizer["plugin_translation:tpa_accepted", new { USER = user.DisplayName, INTERVAL = m_Configuration.GetSection("plugin_configuration:tpainterval").Get<int>() }]);
-                            AsyncHelper.Schedule("Start Teleport", () => TelportPlayer(user, sender).AsTask());
-                        }
+                        var toRemove = PendingTeleports.Where(k => k.Value == user).First();
+                        var sender = toRemove.Key;
+                        PendingTeleports.Remove(toRemove.Key);
+                        await sender.PrintMessageAsync(m_StringLocalizer["plugin_translation:tpa_cancelled"]);
                     }
-                });
-            }
+                    else if (obj.leanRight)
+                    {
+                        var toRemove = PendingTeleports.Where(k => k.Value == user).First();
+                        var sender = toRemove.Key;
+                        PendingTeleports.Remove(toRemove.Key);
+                        await sender.PrintMessageAsync(m_StringLocalizer["plugin_translation:tpa_accepted", new { USER = user.DisplayName, INTERVAL = m_Configuration.GetSection("plugin_configuration:tpainterval").Get<int>() }]);
+                        AsyncHelper.Schedule("Start Teleport", () => TelportPlayer(user, sender).AsTask());
+                    }
+                }
+            });
         }
 
         protected override async UniTask OnUnloadAsync()
         {
-            // await UniTask.SwitchToMainThread();
+            PlayerAnimator.OnLeanChanged_Global -= PlayerAnimator_OnLeanChanged_Global;
+
             m_Logger.LogInformation("Plugin unloaded!");
-            m_Logger.LogInformation("More plugins: www.dvtserver.xyz");
+            m_Logger.LogInformation("<<SSPlugins>>");
+
+            await UniTask.CompletedTask;
         }
 
         internal static Dictionary<UnturnedUser, UnturnedUser> PendingTeleports = new Dictionary<UnturnedUser, UnturnedUser>();
